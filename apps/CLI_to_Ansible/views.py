@@ -38,7 +38,7 @@ def convert(request):
 			yaml_file += str(repl)+'\n'+'  - nxos_command:'+'\n'+'      host: "{{ inventory_hostname }}"'+'\n'+'      type: config'+'\n'+"      command: "+str(s)+"\n\n"
 
 		response = HttpResponse(content_type='text/x-yaml')
-		response['Content-Disposition'] = 'attachment; filename="'+code_filename+'.yaml"'
+		response['Content-Disposition'] = 'attachment; filename="'+code_filename+'.yml"'
 		response.write(yaml_file)
 		return response
 	else:
