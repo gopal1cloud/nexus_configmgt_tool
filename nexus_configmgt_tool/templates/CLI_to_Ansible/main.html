@@ -240,23 +240,37 @@ var ThGlobal = {"ajaxurl":"http:\/\/1-cloud.net\/wp-admin\/admin-ajax.php","is_f
 		<div class="wpb_row vc_row-fluid">
 		    <!--<div class="fruitful_description_box"><div class="fruitful_description shadow-type-1 " id="desc-box-91"  style="background-color:#000;color:#fff;"><span class="top_line"></span><div class="text" style=" font-size: 20px; text-align: left; font-weight: 500;"> Nexus CLI to Ansible </div><span class="bottom_line"></span></div></div>-->
 		    <div id="info-box-row-26" class="info-box-row clearfix"> 				
-<div id="info-box-14" class="ffs-two-one ffs-info-box center">STEP 1
-<div class="ffs-icon-box"><img class="icon" title="Upload" src="/static/CLI_to_Ansible/images/upload.png" alt=""></div>
+<div id="info-box-14" class="ffs-four-one ffs-info-box center"><div class="infobox-title" style="font-size: 30px;">STEP 1</div>
+<!--<div class="ffs-icon-box"><img class="icon" title="Upload" src="/static/CLI_to_Ansible/images/upload.png" alt=""></div>-->
 <div class="ffs-content-box">
-<div class="infobox-title" style="text-align: center; font-size: 20px;"><a title="Upload" href="#">Upload</a></div>
-
+<div class="infobox-title" style="text-align: center; font-size: 20px;">Nexus CLI</div>
+<br>
+  <div style="position:relative;text-align: center;">
+		<a class='btn btn-primary' style="color:#FFF;text-transform:uppercase;" href='javascript:;'>
+			Upload
+			<input id="code_file" type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='jQuery("#upload-file-info").html(jQuery(this).val());'>
+		</a>
+		&nbsp;
+		<span class='label label-info' id="upload-file-info"></span>
+	</div>
+<br>
+<!--
 <div class="row">
     <div class="col-sm-8">
         <input id="code_file" type="file" class="file-loading" accept="text/plain" multiple=true>
             </div>        
 </div>
+-->
 <div class="infobox-text" style="text-align: center; font-size: 13px;">Upload your CLI Command's Text file.</div>
 </div>
 </div>
-<div id="info-box-83" class=" ffs-two-two ffs-info-box center ">STEP 2
-<div class="ffs-icon-box"><img class="icon" title="Ansible" src="/static/CLI_to_Ansible/images/Ansible.png" alt=""></div>
+<div id="info-box-40" class=" ffs-six-one ffs-info-box center "><br><br>
+	<img src="http://megaicons.net/static/img/icons_sizes/8/178/512/arrows-right-round-icon.png">
+</div>
+<div id="info-box-83" class=" ffs-four-two ffs-info-box center "><div class="infobox-title" style="font-size: 30px;">STEP 2</div>
+<!--<div class="ffs-icon-box"><img class="icon" title="Ansible" src="/static/CLI_to_Ansible/images/Ansible.png" alt=""></div>-->
 <div class="ffs-content-box">
-<div class="infobox-title" style="text-align: center; font-size: 20px;"><a title="Convert to Playbook" href="#">Convert to Playbook</a></div>                 	
+<div class="infobox-title" style="text-align: center; font-size: 20px;">Ansible</div>                 	
 <div class="row">
 <div class="infobox-text" style="text-align: center; font-size: 13px;">Fill the information and convert the CLI Command's text file to Ansible Playbook.</div>	
 <form id="cli_convert_form" method="post">
@@ -277,6 +291,8 @@ var ThGlobal = {"ajaxurl":"http:\/\/1-cloud.net\/wp-admin\/admin-ajax.php","is_f
 </form>
 </div>
 </div>
+
+</div>	  
 
 </div>	    
 
@@ -339,6 +355,7 @@ var x_email_forms = {"ajaxurl":"http:\/\/1-cloud.net\/wp-admin\/admin-ajax.php"}
     }
 }
 (document, "script", "twitter-wjs");
+/*
 jQuery("#code_file").fileinput({
 	        maxFileCount: 1,
 	        showCaption: false,
@@ -349,7 +366,7 @@ jQuery("#code_file").fileinput({
             allowedFileExtensions: ["txt"],
 			//previewClass: "bg-warning"
 		});
-
+*/
 jQuery("#code_convert").click( function (){
 	var error_msg = "Please fill the below mentioned information.\n\n";	
 	var error_flag = false;
@@ -357,7 +374,12 @@ jQuery("#code_convert").click( function (){
 	if( code_file == 0) {
     error_msg += " * Need to upload CLI Text file.\n";
     error_flag = true;
-    }    
+    }
+	var ext = $('#code_file').val().split('.').pop().toLowerCase();
+	if($.inArray(ext, ['txt']) == -1) {
+		error_msg += " *  Invalid extension for file. Only 'txt' files are supported..\n";
+        error_flag = true;
+	}    
 	if( jQuery("#code_desc").val() == 0) {
     error_msg += " * Need to enter the Description.\n";
     error_flag = true;
@@ -383,7 +405,8 @@ jQuery("#code_convert").click( function (){
 			var converturl = "/convert/?"+jQuery("form#cli_convert_form").serialize();
 			window.open(converturl,"_blank");
 			jQuery("form#cli_convert_form")[0].reset();	
-			jQuery("#code_file").fileinput('clear');		
+			jQuery("#code_file").val('');
+			jQuery("#upload-file-info").html('');		
 		  }
 		  reader.readAsText(file);  
 		} 				
